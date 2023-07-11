@@ -45,7 +45,7 @@ friends = DataBase.getDatabase()
 
 # 手动输入留言文本，使用 {0} 作为昵称的占位符
 # TODO：json留言支持
-text = input("请输入留言文本（使用 {0} 作为对好友称呼的占位符,使用 \n 来作为换行标志）：")
+text = input("请输入留言文本（使用 {0} 作为对好友称呼的占位符,使用 {n} 来作为换行的占位符）：")
 
 # 把“\n” 替换成换行符
 text = text.replace("{n}", "\n")
