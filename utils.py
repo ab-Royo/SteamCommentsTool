@@ -6,6 +6,16 @@ import Logcolor
 import requests
 
 
+class Update:
+    @staticmethod
+    def checkUpdate():
+        try:
+            response = requests.get("https://api.github.com/repos/ab-Royo/SteamCommentsTool/releases/latest")
+            print(Logcolor.responseINFO() + "Github最新正式版本 v" + response.json()["tag_name"] + ", 发布时间 " + response.json()["published_at"])
+        except Exception as e:
+            print(Logcolor.responseERROR() + f"检查Github更新失败: {e}")
+
+
 # TODO: 读取 "./config/settings.json" 下的配置
 class Proxy:
     @staticmethod
@@ -93,3 +103,4 @@ if __name__ == "__main__":
     print("ProxyStatus: " + str(Proxy.ProxyStatus()))
     print("ProxyMode: " + str(Proxy.ProxyMode()))
     print("ProxyURL: " + str(Proxy.ProxyURL()))
+    Update.checkUpdate()

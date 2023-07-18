@@ -41,12 +41,14 @@ https://www.python.org/ftp/python/3.9.13/python-3.9.13-amd64.exe
 
 ### 1.获取本项目
 **如果你是新手**
+
 跳转至 [Releases](https://github.com/ab-Royo/SteamCommentsTool/releases) 页面，下载最新版本的压缩包，解压到你想要的位置。此包已包含了本项目的所有文件，你可以直接运行本项目。
 
 
 ---
 
 **如果你有一定代码基础**
+
 如果你有Git，在命令行中输入以下命令
 ```
 git clone https://github.com/ab-Royo/SteamCommentsTool.git
@@ -56,6 +58,7 @@ git clone https://github.com/ab-Royo/SteamCommentsTool.git
 
 ### 2.安装依赖
 *（如果你在上一步直接在Releases中下载了项目则略过本步骤）*
+
 进入你解压出来的文件夹中
 #### Windows10:
 点击文件资源管理器左上角**文件**，选择**打开Windows PowerShell**
@@ -157,17 +160,20 @@ WebAPI boostrap failed: HTTPSConnectionPool(host='api.steampowered.com'，port=4
 ```Python
 HTTPSConnectionPool(host='steamcommunity.com', port=443): Max retries exceeded with url: /comment/Profile/post/7656xxxx/-1/ (Caused by ProxyError('Cannot connect to proxy.', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000281D78EBE50>: Failed to establish a new connection: [WinError 10061] 由于目标计算机 积极拒绝，无法连接。')))
 ```
-
+或是 发送留言时发生异常(已确认对方未关闭留言板)
+```Python
+{'success': False, 'error': 'The settings on this account do not allow you to add comments.'}
+```
 网络异常或代理配置错误。
 
-请阅读教程第4步确保代理配置正常。
+请阅读教程第4步确保代理配置正常，或更换你的网络节点。
 
 3. 程序留言时出现以下提示
 ```Python
 给 xxx 留言失败！
 xxx POST结果为： ...
 ```
-请查看对方留言板是否开启好友才能留言，或是禁止留言；可参考POST结果中的提示信息。
+请查看对方留言板是否开启好友才能留言，或是禁止留言；可参考POST结果中`'error':`的提示信息。
 
 4. 程序登录时出现以下提示
 ```Python
@@ -191,7 +197,7 @@ IndexError: Replacement index 1 out of range for positional args tuple
 
 
 ### =D
-Miku39佬的Steam assistant项目厉害！
+Miku39佬的Steam assistant项目厉害！是看到了Miku39佬的项目之后有了写Steam的两个项目的想法！
 
 **感谢以下开发者对本项目作出的贡献：**
 

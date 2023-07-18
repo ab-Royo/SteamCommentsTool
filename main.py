@@ -5,14 +5,17 @@ import requests
 import steam
 import Settings
 import Logcolor
-from utils import DataBase
-
+from utils import DataBase, Update
+# 项目版本
+__version__ = "0.3.0"
 # 定义成功和失败的次数
 success_count = 0
 fail_count = 0
 
+# 版本信息，检查更新
+print(Logcolor.responseINFO() + "SteamCommentsTool 当前版本 v" + __version__)
+Update.checkUpdate()
 # 检测数据库存在, 初始化
-
 DataBase.initDB()
 
 # 创建 Steam 客户端对象
@@ -73,16 +76,16 @@ if Enable:
             response = requests.post(url, headers=Headers, data=data, proxies=proxy, cookies=cookie_dict)
             # 检查留言是否成功
             if response.json()["success"]:
-                print(Logcolor.responseINFO() + f" {nickname} 留言成功！Https://steamcommunity.com/profiles/{id}")
+                print(Logcolor.responseINFO() + f" {nickname} 留言成功！https://steamcommunity.com/profiles/{id}")
                 # 更新成功次数
                 success_count += 1
             else:
-                print(Logcolor.responseWARN() + f" {nickname} 留言失败！Https://steamcommunity.com/profiles/{id}")
-                print(Logcolor.responseWARN() + f"{nickname} POST结果为：{response.json()}")
+                print(Logcolor.responseERROR() + f" {nickname} 留言失败！https://steamcommunity.com/profiles/{id}")
+                print(Logcolor.responseWARN() + f"{nickname} POST错误信息为：{response.json()}")
                 # 更新失败次数
                 fail_count += 1
         except Exception as e:
-            print(Logcolor.responseERROR() + f"POST异常：{e}")
+            print(Logcolor.responseERROR() + f"requests异常：{e}")
             # 更新失败次数
             fail_count += 1
         # 随机间隔1-3秒，减少风控概率
@@ -112,16 +115,16 @@ else:
             response = requests.post(url, headers=Headers, data=data, cookies=cookie_dict)
             # 检查留言是否成功
             if response.json()["success"]:
-                print(Logcolor.responseINFO() + f" {nickname} 留言成功！Https://steamcommunity.com/profiles/{id}")
+                print(Logcolor.responseINFO() + f" {nickname} 留言成功！https://steamcommunity.com/profiles/{id}")
                 # 更新成功次数
                 success_count += 1
             else:
-                print(Logcolor.responseWARN() + f" {nickname} 留言失败！Https://steamcommunity.com/profiles/{id}")
-                print(Logcolor.responseWARN() + f"{nickname} POST结果为：{response.json()}")
+                print(Logcolor.responseERROR() + f" {nickname} 留言失败！https://steamcommunity.com/profiles/{id}")
+                print(Logcolor.responseWARN() + f"{nickname} POST错误信息为：{response.json()}")
                 # 更新失败次数
                 fail_count += 1
         except Exception as e:
-            print(f"POST异常：{e}")
+            print(Logcolor.responseERROR() + f"requests异常：{e}")
             # 更新失败次数
             fail_count += 1
             # 随机间隔1-3秒，减少风控概率
