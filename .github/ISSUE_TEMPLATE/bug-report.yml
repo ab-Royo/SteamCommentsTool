@@ -1,0 +1,39 @@
+name: Bug 反馈
+title: "Bug: 出现异常"
+description: 代码没有按照预期运作
+labels: ["bug"]
+body:
+  - type: input
+    id: env-chatrecorder
+    attributes:
+      label: 程序版本
+      description: 填写SteamCommentsToDB的版本
+      placeholder: 例如 0.1.1
+    validations:
+      required: true
+
+  - type: textarea
+    id: describe
+    attributes:
+      label: 遇到了什么问题
+      description: 你的预期是？ 但是实际上发生了什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 复现步骤
+      description: 如果此问题多次出现，请说明你做了什么
+      placeholder: |
+        1. 首先……
+        2. 然后……
+        3. 发生……
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 截图或日志
+      description: 提供有助于诊断问题的任何日志和截图
