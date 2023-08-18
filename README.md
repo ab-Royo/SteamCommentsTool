@@ -180,9 +180,13 @@ HTTPSConnectionPool(host='steamcommunity.com', port=443): Max retries exceeded w
 ```Python
 {'success': False, 'error': 'The settings on this account do not allow you to add comments.'}
 ```
-网络异常或代理配置错误。
+网络异常或代理配置错误!
 
-请阅读教程第4步确保代理配置正常，或更换你的网络节点。
+网络异常或代理配置错误!
+
+网络异常或代理配置错误!
+
+(非常常见的一种报错)请阅读教程第4步确保代理配置正常，或更换一个网络节点试一试。
 
 3. 程序留言时出现以下提示
 ```Python
