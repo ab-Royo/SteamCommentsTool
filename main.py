@@ -67,24 +67,24 @@ if Enable:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                           'Chrome/110.0.0.0 Safari/537.36'
         }
-        url = f"https://steamcommunity.com/comment/Profile/post/{id}/-1/"
+        url = f"https://steamcommunity.com/comment/Profile/post/{userID}/-1/"
         data = {
             "comment": message,
             "count": 6,
             "sessionid": cookie_dict["sessionid"],
             "feature2": -1
         }
-        if recently == "true":
+        if recently == "True" or recently == "true":
             # 发送留言请求
             try:
                 response = requests.post(url, headers=Headers, data=data, proxies=proxy, cookies=cookie_dict)
                 # 检查留言是否成功
                 if response.json()["success"]:
-                    print(Logcolor.responseINFO() + f" {nickname} 留言成功！https://steamcommunity.com/profiles/{id}")
+                    print(Logcolor.responseINFO() + f" {nickname} 留言成功！https://steamcommunity.com/profiles/{userID}")  
                     # 更新成功次数
                     success_count += 1
                 else:
-                    print(Logcolor.responseERROR() + f" {nickname} 留言失败！https://steamcommunity.com/profiles/{id}")
+                    print(Logcolor.responseERROR() + f" {nickname} 留言失败！https://steamcommunity.com/profiles/{userID}")
                     print(Logcolor.responseWARN() + f"{nickname} POST错误信息为：{response.json()}")
                     # 更新失败次数
                     fail_count += 1
@@ -110,24 +110,24 @@ else:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                           'Chrome/110.0.0.0 Safari/537.36'
         }
-        url = f"https://steamcommunity.com/comment/Profile/post/{id}/-1/"
+        url = f"https://steamcommunity.com/comment/Profile/post/{userID}/-1/"
         data = {
             "comment": message,
             "count": 6,
             "sessionid": cookie_dict["sessionid"],
             "feature2": -1
         }
-        if recently == "True":
+        if recently == "True" or recently == "true":
             # 发送留言请求
             try:
                 response = requests.post(url, headers=Headers, data=data, cookies=cookie_dict)
                 # 检查留言是否成功
                 if response.json()["success"]:
-                    print(Logcolor.responseINFO() + f" {nickname} 留言成功！https://steamcommunity.com/profiles/{id}")
+                    print(Logcolor.responseINFO() + f" {nickname} 留言成功！https://steamcommunity.com/profiles/{userID}")
                     # 更新成功次数
                     success_count += 1
                 else:
-                    print(Logcolor.responseERROR() + f" {nickname} 留言失败！https://steamcommunity.com/profiles/{id}")
+                    print(Logcolor.responseERROR() + f" {nickname} 留言失败！https://steamcommunity.com/profiles/{userID}")
                     print(Logcolor.responseWARN() + f"{nickname} POST错误信息为：{response.json()}")
                     # 更新失败次数
                     fail_count += 1
