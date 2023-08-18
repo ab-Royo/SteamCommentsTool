@@ -26,6 +26,7 @@ Steam个人资料留言板留言工具。支持一次发送至多个好友，支
 
 
 ## TODO
+- [x] 可以使用[SteamCommentsToDB](https://github.com/ab-Royo/SteamCommentsToDB)的数据库
 - [ ] 仅需登录一次，后续自动登录
 - [ ] 留言内容目前仅命令行输入，之后可通过json传入
 - [ ] 自动获取好友列表至数据库
@@ -95,18 +96,33 @@ python main.py
 ```
 ---
 随后程序提示数据库不存在，将会在 `SteamCommentsTool` 文件夹内生成一个名为 `friends.db` 的数据库文件，此时你需要配置数据库
-#### friends表结构
-| 列名         | 数据类型        | 描述               |
-|------------|-------------|------------------|
-| userID     | INTEGER   | 好友的64位SteamID |
-| nickname   | TEXT   | 你对好友的称呼         |
+#### friends表架构（这是本程序使用的数据库表）
+| 列名          | 数据类型      | 描述           |
+|-------------|-----------|--------------|
+| userID      | char(64)  | 用户的SteamID64 |
+| nickname    | char(100) | 你对用户的称呼      |
+| profileName | char(100) | 用户的个人资料昵称    |
+| recently    | char(10)  | 用户是否符合时间次数条件 |
+#### msg表结构
+| 列名         | 数据类型        | 描述              |
+|------------|-------------|-----------------|
+| ContentID  | varchar(30) | Steam每一条评论的唯一ID |
+| userID     | char(64)    | 评论发送者的SteamID64 |
+| nickName   | char(100)   | 评论发送者的昵称        |
+| userAvatar | char(200)   | 评论发送者的头像        |
+| Content    | char(1000)  | 评论内容            |
+| UnixTime   | char(100)   | 评论发送的Unix时间     |
+| sendTime   | char(20)    | 评论发送的北京时间       |
 
 你需要一个SQLite数据库管理工具，例如 [DB Browser for SQLite (免费)](https://sqlitebrowser.org/dl/)，[DataGrip](https://www.jetbrains.com/datagrip/)等等
 
-使用数据库工具打开`friends.db` ，找到表名为`friends`的表，在表中**添加字段**：
-id列是要留言的好友的64位SteamID，nickname列是你对好友的昵称
+使用数据库工具打开`SteamDB.db` ，找到表名为`friends`的表，在表中**添加字段**：
+1. userID列是要留言的好友的64位SteamID
+2. nickname列是你对好友的昵称
+3. profileName列是好友的个人资料昵称（这个可以 **不填留空** ，新增此列的原因是可以通过[SteamCommentsToDB](https://github.com/ab-Royo/SteamCommentsToDB)使用msg表的数据导入信息）
+4. recently列是 是否留言，如果要留言则填写文字`true`，否则填写`false`（此列的内容可以通过[SteamCommentsToDB](https://github.com/ab-Royo/SteamCommentsToDB)使用msg表的数据导入信息）
 
-获取好友的64位SteamID可以使用将留言板保存到数据库的[SteamCommentsToDB项目](https://github.com/ab-Royo/SteamCommentsToDB)，或者使用 [SteamID64](https://steamid.xyz/) 等工具
+获取好友的SteamID64可以使用使用 [SteamID64](https://steamid.xyz/) 等网页工具，或通过[SteamCommentsToDB项目](https://github.com/ab-Royo/SteamCommentsToDB)使用msg表的数据导入信息
 
 
 ### 4.配置代理
@@ -164,9 +180,13 @@ HTTPSConnectionPool(host='steamcommunity.com', port=443): Max retries exceeded w
 ```Python
 {'success': False, 'error': 'The settings on this account do not allow you to add comments.'}
 ```
-网络异常或代理配置错误。
+网络异常或代理配置错误!
 
-请阅读教程第4步确保代理配置正常，或更换你的网络节点。
+网络异常或代理配置错误!
+
+网络异常或代理配置错误!
+
+(非常常见的一种报错)请阅读教程第4步确保代理配置正常，或更换一个网络节点试一试。
 
 3. 程序留言时出现以下提示
 ```Python
@@ -187,6 +207,13 @@ IndexError: Replacement index 1 out of range for positional args tuple
 ```
 请仅使用`{0}`作为nickname替换符，`{n}`作为换行符
 不要使用`{1}`、`{2}`等等，否则会出现此错误
+
+6. 程序运行时提示数据库未创建，但文件夹内已有`friends.db`
+
+2023/8/2日更新后启用了新数据库`SteamDB.db`，你可以自行将原数据库文件中的数据写入新数据库文件中。
+
+本次更新数据库实现两个Steam项目的数据库的共用，将支持 Steam留言获取->按时间次数条件筛选->自动填写`friends表`->符合条件留言 。
+
 
 
 ## ovo
